@@ -1526,7 +1526,7 @@ static void handle_pdu(Connection *conn, Boxc *box, SMPP_PDU *pdu) {
 	}
 	switch (pdu->type) {
 	case bind_transmitter:
-		system_type = pdu->u.bind_transmitter.system_type ? pdu->u.bind_transmitter.system_type : octstr_imm("");
+        system_type = (pdu->u.bind_transmitter.system_type && octstr_len(pdu->u.bind_transmitter.system_type) > 0) ? pdu->u.bind_transmitter.system_type: octstr_imm("SMS");
 		if (check_login(box, pdu->u.bind_transmitter.system_id, pdu->u.bind_transmitter.password, system_type, SMPP_LOGIN_TRANSMITTER)) {
 			box->logged_in = 1;
 			box->version = pdu->u.bind_transmitter.interface_version;
@@ -1543,7 +1543,7 @@ static void handle_pdu(Connection *conn, Boxc *box, SMPP_PDU *pdu) {
 		}
 		break;
 	case bind_receiver:
-		system_type = pdu->u.bind_receiver.system_type ? pdu->u.bind_receiver.system_type : octstr_imm("");
+        system_type = (pdu->u.bind_receiver.system_type && octstr_len(pdu->u.bind_receiver.system_type) > 0) ? pdu->u.bind_receiver.system_type : octstr_imm("SMS");
 		if (check_login(box, pdu->u.bind_receiver.system_id, pdu->u.bind_receiver.password, system_type, SMPP_LOGIN_RECEIVER)) {
 			box->logged_in = 1;
 			box->version = pdu->u.bind_receiver.interface_version;
@@ -1560,7 +1560,7 @@ static void handle_pdu(Connection *conn, Boxc *box, SMPP_PDU *pdu) {
 		}
 		break;
 	case bind_transceiver:
-		system_type = pdu->u.bind_transceiver.system_type ? pdu->u.bind_transceiver.system_type : octstr_imm("");
+        system_type = (pdu->u.bind_transceiver.system_type && octstr_len(pdu->u.bind_transceiver.system_type) > 0) ? pdu->u.bind_transceiver.system_type : octstr_imm("SMS");
 		if (check_login(box, pdu->u.bind_transceiver.system_id, pdu->u.bind_transceiver.password, system_type, SMPP_LOGIN_TRANSCEIVER)) {
 			box->logged_in = 1;
 			box->version = pdu->u.bind_transceiver.interface_version;
